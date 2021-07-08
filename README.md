@@ -3,8 +3,9 @@
 Inspired by all the time I spent making maps in GIMP for D&D campaigns,
 this uses simplex noise to create random landmasses.
 
-This only depends on the standard library and FastNoiseLite, which is distributed with the project,
-so this should compile without much effort using Visual Studio 2019
+This only depends on SFML and FastNoiseLite, both of which are included with the project.
+SFML libs built for Visual Studio 2019 on Windows ae included, they are the only non-portable
+part of this project.
 
 To-do:
 * Optimize island assignment (recursive function occasionally causes stack overflow, I had to set stack size to 4mb for an 800x600 window, seems unacceptable)  
