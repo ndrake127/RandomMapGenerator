@@ -18,9 +18,19 @@ public:
 	void draw(sf::RenderWindow& window);
 	void update();
 
-	void GenerateNoise();
+	void Generate();
 
 private:
+	// call these from Generate()
+	void GenerateNoise();
+	void ApplyThreshold();
+	void AssignIslandGroups();
+	void TrimEdgeIslands();
+	void RandomIslandPrune();
+
+	// dont call these from Generate(), let other functions do it for you
+	void RecursiveIslandAssignment(unsigned int x, unsigned int y);
+
 	const unsigned int m_MapWidth;
 	const unsigned int m_MapHeight;
 
@@ -28,6 +38,10 @@ private:
 
 	sf::Sprite m_MapSprite;
 	sf::Texture m_MapTexture;
+
 	sf::Image m_MapImage;
+	std::vector<std::vector<int> > m_IslandGraph;
+	std::vector<int> m_IslandList;
+	unsigned int m_IslandCount = 0;
 };
 

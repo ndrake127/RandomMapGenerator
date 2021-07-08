@@ -4,7 +4,7 @@
 int main() {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Nick's Random Map Generator");
 	Map map;
-	map.GenerateNoise();
+	map.Generate();
 
 	sf::Event event;
 	while (window.isOpen()) {
