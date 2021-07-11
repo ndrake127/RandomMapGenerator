@@ -33,7 +33,7 @@ void Map::update() {
 }
 
 void Map::RecursiveIslandAssignment(unsigned int x, unsigned int y) {
-	if (m_IslandGraph[x][y] == -1 && m_MapImage.getPixel(x, y) == sf::Color::White) {
+	if (m_IslandGraph[x][y] == -1 && m_MapImage.getPixel(x, y) != sf::Color::Black) {
 		// Assigment
 		m_IslandGraph[x][y] = m_IslandCount;
 
@@ -53,9 +53,9 @@ void Map::Generate() {
 	GenerateNoise();
 	ApplyThreshold();
 	AssignIslandGroups();
-	TrimEdgeIslands();
-	RandomIslandPrune();
-	//ColorIslands();
+	//TrimEdgeIslands();
+	//RandomIslandPrune();
+	ColorIslands();
 
 	update();
 }
@@ -84,7 +84,7 @@ void Map::ApplyThreshold() {
 				val = sf::Color::White;
 			}
 			else {
-				val = sf::Color::Green;
+				val = sf::Color::Yellow;
 			}
 			m_MapImage.setPixel(x, y, val);
 		}
@@ -97,7 +97,7 @@ void Map::ApplyThreshold() {
 void Map::AssignIslandGroups() {
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
-			if (m_IslandGraph[x][y] == -1 && m_MapImage.getPixel(x, y) == sf::Color::White) {
+			if (m_IslandGraph[x][y] == -1 && m_MapImage.getPixel(x, y) != sf::Color::Black) {
 				// new island found, begin recursive assignment
 				RecursiveIslandAssignment(x, y);
 				m_IslandList.push_back(m_IslandCount);
@@ -158,7 +158,11 @@ void Map::ColorIslands() {
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
 			if (m_IslandGraph[x][y] != -1) {
-				m_MapImage.setPixel(x, y, m_IslandColor);
+				if (m_MapImage.getPixel(x, y) != sf::Color::Yellow) {
+					m_MapImage.setPixel(x, y, m_IslandColor);
+				} else {
+					m_MapImage.setPixel(x, y, sf::Color::Yellow);
+				}
 			} else {
 				m_MapImage.setPixel(x, y, m_OceanColor);
 			}
