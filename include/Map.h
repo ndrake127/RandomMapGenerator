@@ -27,6 +27,7 @@ private:
 	void AssignIslandGroups();
 	void TrimEdgeIslands();
 	void RandomIslandPrune();
+	void ColorIslands();
 
 	// dont call these from Generate(), let other functions do it for you
 	void RecursiveIslandAssignment(unsigned int x, unsigned int y);
@@ -40,6 +41,8 @@ private:
 	sf::Texture m_MapTexture;
 
 	sf::Image m_MapImage;
+	sf::Color m_IslandColor;
+	sf::Color m_OceanColor;
 	std::vector<std::vector<int> > m_IslandGraph;
 	std::vector<int> m_IslandList;
 	unsigned int m_IslandCount = 0;

@@ -18,6 +18,9 @@ Map::Map() :
 
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 	noise.SetSeed(std::time(nullptr));
+
+	m_IslandColor = sf::Color(37, 116, 54);
+	m_OceanColor = sf::Color(49, 73, 184);
 }
 
 void Map::draw(sf::RenderWindow& window) {
@@ -52,6 +55,7 @@ void Map::Generate() {
 	AssignIslandGroups();
 	TrimEdgeIslands();
 	RandomIslandPrune();
+	ColorIslands();
 
 	update();
 }
@@ -66,7 +70,7 @@ void Map::GenerateNoise() {
 }
 
 void Map::ApplyThreshold() {
-	float threshold = 0.55f;
+	float threshold = 0.6f;
 
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
@@ -117,7 +121,7 @@ void Map::TrimEdgeIslands() {
 }
 
 void Map::RandomIslandPrune() {
-	unsigned int finalIslandCount = 5;
+	unsigned int finalIslandCount = 8;
 	finalIslandCount = (finalIslandCount <= m_IslandCount) ? finalIslandCount : m_IslandCount;
 	std::vector<int> preservedIslands(finalIslandCount, -1);
 
@@ -134,6 +138,19 @@ void Map::RandomIslandPrune() {
 			if (m_IslandGraph[x][y] != -1 && std::find(preservedIslands.begin(), preservedIslands.end(), m_IslandGraph[x][y]) == preservedIslands.end()) {
 				m_IslandGraph[x][y] = -1;
 				m_MapImage.setPixel(x, y, sf::Color::Black);
+			}
+		}
+	}
+}
+
+void Map::ColorIslands() {
+	for (unsigned int y = 0; y < m_MapHeight; y++) {
+		for (unsigned int x = 0; x < m_MapWidth; x++) {
+			if (m_IslandGraph[x][y] != -1) {
+				m_MapImage.setPixel(x, y, m_IslandColor);
+			}
+			else {
+				m_MapImage.setPixel(x, y, m_OceanColor);
 			}
 		}
 	}
