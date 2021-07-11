@@ -49,10 +49,6 @@ void Map::RecursiveIslandAssignment(unsigned int x, unsigned int y) {
 	}
 }
 
-void Map::RecursiveBeachAssignment(unsigned int x, unsigned int y) {
-
-}
-
 void Map::Generate() {
 	GenerateNoise();
 	ApplyThreshold();
@@ -75,7 +71,7 @@ void Map::GenerateNoise() {
 }
 
 void Map::ApplyThreshold() {
-	float threshold = 0.6f;
+	float threshold = 0.55f;
 
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {

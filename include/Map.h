@@ -32,7 +32,6 @@ private:
 
 	// dont call these from Generate(), let other functions do it for you
 	void RecursiveIslandAssignment(unsigned int x, unsigned int y);
-	void RecursiveBeachAssignment(unsigned int x, unsigned int y);
 
 	const unsigned int m_MapWidth;
 	const unsigned int m_MapHeight;
