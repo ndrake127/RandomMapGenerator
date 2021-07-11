@@ -13,7 +13,7 @@ private:
 	};
 
 public:
-	Map();
+	Map(unsigned int MapWidth, unsigned int MapHeight);
 
 	void draw(sf::RenderWindow& window);
 	void update();

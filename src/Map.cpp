@@ -6,9 +6,9 @@
 #include <random>
 #include <iostream>
 
-Map::Map() : 
-	m_MapWidth(800),
-	m_MapHeight(600)
+Map::Map(unsigned int MapWidth, unsigned int MapHeight) :
+	m_MapWidth(MapWidth),
+	m_MapHeight(MapHeight)
 {
 	m_IslandGraph = std::vector<std::vector<int> >(m_MapWidth, std::vector<int>(m_MapHeight, -1));
 

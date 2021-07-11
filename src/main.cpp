@@ -2,8 +2,11 @@
 #include "Map.h"
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Nick's Random Map Generator");
-	Map map;
+	unsigned int width = 1200;
+	unsigned int height = 600;
+
+	sf::RenderWindow window(sf::VideoMode(width, height), "Nick's Random Map Generator");
+	Map map(width, height);
 	map.Generate();
 
 	sf::Event event;
