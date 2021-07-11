@@ -6,8 +6,7 @@ int main() {
 	unsigned int height = 720;
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Nick's Random Map Generator");
-	Map map(width, height);
-	map.Generate();
+
 
 	sf::Event event;
 	while (window.isOpen()) {
@@ -16,10 +15,13 @@ int main() {
 				window.close();
 			}
 		}
-
+		Map map(width, height);
+		map.Generate();
 		window.clear();
 		map.draw(window);
 		window.display();
+
+		sf::sleep(sf::seconds(2));
 	}
 
 	return 1;
