@@ -49,6 +49,10 @@ void Map::RecursiveIslandAssignment(unsigned int x, unsigned int y) {
 	}
 }
 
+void Map::RecursiveBeachAssignment(unsigned int x, unsigned int y) {
+
+}
+
 void Map::Generate() {
 	GenerateNoise();
 	ApplyThreshold();
@@ -63,6 +67,7 @@ void Map::Generate() {
 void Map::GenerateNoise() {
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
+			// converts noise from range (-1, 1) to (0, 255) then assigns to appropriate pixel
 			unsigned char val = (noise.GetNoise((float)x, (float)y) + 1.0f) / 2.0f * 255.0f;
 			m_MapImage.setPixel(x, y, sf::Color(val, val, val));
 		}
@@ -148,9 +153,18 @@ void Map::ColorIslands() {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
 			if (m_IslandGraph[x][y] != -1) {
 				m_MapImage.setPixel(x, y, m_IslandColor);
-			}
-			else {
+			} else {
 				m_MapImage.setPixel(x, y, m_OceanColor);
+			}
+		}
+	}
+}
+
+void Map::GenerateBeaches() {
+	for (unsigned int y = 0; y < m_MapHeight; y++) {
+		for (unsigned int x = 0; x < m_MapWidth; x++) {
+			if (m_IslandGraph[x][y] != -1) {
+
 			}
 		}
 	}

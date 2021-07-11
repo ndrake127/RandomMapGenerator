@@ -2,8 +2,8 @@
 #include "Map.h"
 
 int main() {
-	unsigned int width = 1200;
-	unsigned int height = 600;
+	unsigned int width = 1280;
+	unsigned int height = 720;
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Nick's Random Map Generator");
 	Map map(width, height);
