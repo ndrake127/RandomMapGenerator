@@ -55,7 +55,7 @@ void Map::Generate() {
 	AssignIslandGroups();
 	TrimEdgeIslands();
 	RandomIslandPrune();
-	ColorIslands();
+	//ColorIslands();
 
 	update();
 }
@@ -71,11 +71,21 @@ void Map::GenerateNoise() {
 }
 
 void Map::ApplyThreshold() {
-	float threshold = 0.55f;
+	float lowerThreshold = 0.55f;
+	float upperThreshold = 0.6f;
 
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
-			sf::Color val = (m_MapImage.getPixel(x, y).r > threshold * 255.0f) ? sf::Color::White : sf::Color::Black;
+			sf::Color val;
+			if (m_MapImage.getPixel(x, y).r < lowerThreshold * 255.0f) {
+				val = sf::Color::Black;
+			}
+			else if (m_MapImage.getPixel(x, y).r > upperThreshold * 255.0f) {
+				val = sf::Color::White;
+			}
+			else {
+				val = sf::Color::Green;
+			}
 			m_MapImage.setPixel(x, y, val);
 		}
 	}
