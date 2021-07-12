@@ -17,6 +17,7 @@ Map::Map(unsigned int MapWidth, unsigned int MapHeight) :
 	m_MapSprite.setTexture(m_MapTexture);
 
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+	noise.SetSeed(std::time(nullptr));
 
 	m_IslandColor = sf::Color(37, 116, 54);
 	m_OceanColor = sf::Color(49, 73, 184);
@@ -49,16 +50,23 @@ void Map::RecursiveIslandAssignment(unsigned int x, unsigned int y) {
 }
 
 void Map::Generate() {
-	noise.SetSeed(std::time(nullptr));
+	noise.SetSeed(rand());
 
 	GenerateNoise();
 	ApplyThreshold();
 	AssignIslandGroups();
 	TrimEdgeIslands();
-	//RandomIslandPrune();
+	RandomIslandPrune();
 	ColorIslands();
 
 	update();
+}
+
+void Map::Delete() {
+	m_MapImage.create(m_MapWidth, m_MapHeight);
+	m_IslandGraph = std::vector<std::vector<int> >(m_MapWidth, std::vector<int>(m_MapHeight, -1));
+	m_IslandList.clear();
+	m_IslandCount = 0;
 }
 
 void Map::GenerateNoise() {
@@ -72,8 +80,8 @@ void Map::GenerateNoise() {
 }
 
 void Map::ApplyThreshold() {
-	float lowerThreshold = 0.5f;
-	float upperThreshold = 0.55f;
+	float lowerThreshold = 0.55f;
+	float upperThreshold = 0.6f;
 
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
 		for (unsigned int x = 0; x < m_MapWidth; x++) {
@@ -166,16 +174,6 @@ void Map::ColorIslands() {
 				}
 			} else {
 				m_MapImage.setPixel(x, y, m_OceanColor);
-			}
-		}
-	}
-}
-
-void Map::GenerateBeaches() {
-	for (unsigned int y = 0; y < m_MapHeight; y++) {
-		for (unsigned int x = 0; x < m_MapWidth; x++) {
-			if (m_IslandGraph[x][y] != -1) {
-
 			}
 		}
 	}

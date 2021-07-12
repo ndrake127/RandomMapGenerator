@@ -7,6 +7,8 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(width, height), "Nick's Random Map Generator");
 
+	Map map(width, height);
+	map.Generate();
 
 	sf::Event event;
 	while (window.isOpen()) {
@@ -14,14 +16,17 @@ int main() {
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Space) {
+					map.Delete();
+					map.Generate();
+				}
+			}
 		}
-		Map map(width, height);
-		map.Generate();
+
 		window.clear();
 		map.draw(window);
 		window.display();
-
-		sf::sleep(sf::seconds(2));
 	}
 
 	return 1;
