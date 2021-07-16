@@ -80,7 +80,7 @@ void Map::GenerateNoise() {
 }
 
 void Map::ApplyThreshold() {
-	float lowerThreshold = 0.55f;
+	float lowerThreshold = 0.50f;
 	float upperThreshold = 0.6f;
 
 	for (unsigned int y = 0; y < m_MapHeight; y++) {
